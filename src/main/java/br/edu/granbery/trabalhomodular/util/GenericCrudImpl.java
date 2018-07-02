@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 public class GenericCrudImpl<T, PK extends Serializable> implements GenericCrud<T, PK>{
 	
 	private static final String SELECT_ALL_QUERY = "SELECT c FROM %s as c";
-	private static final String DELETE_FROM = "DELETE FROM %s WHERE "
+	private static final String DELETE_FROM_QUERY = "DELETE FROM %s WHERE %s = :id";
 	private Class<T> entityClass;
 	private EntityManager entityManager = JPAUtil.getEntityManager();
 	
@@ -42,7 +42,7 @@ public class GenericCrudImpl<T, PK extends Serializable> implements GenericCrud<
 
 	public void delete(PK id) {
 		entityManager.getTransaction().begin();
-		
+		entityManager.createQuery(String.format(DELETE_FROM_QUERY, entityClass.getSimpleName(), "id")).setParameter("id", id).executeUpdate();
 		entityManager.getTransaction().commit();
 	}
 	
@@ -53,4 +53,5 @@ public class GenericCrudImpl<T, PK extends Serializable> implements GenericCrud<
 		entityManager.getTransaction().commit();
 		return listOfT;
 	}
+	
 }

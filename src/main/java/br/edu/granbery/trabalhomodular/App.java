@@ -1,6 +1,7 @@
 package br.edu.granbery.trabalhomodular;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import br.edu.granbery.trabalhomodular.controller.NotaFiscalController;
 import br.edu.granbery.trabalhomodular.model.Item;
@@ -28,12 +29,30 @@ public class App
     	destinatario.setEstado("MG");
     	destinatario.setInscricaoEstadual("1234");
     	
+    	Pessoa pessoa3 = new Pessoa();
+    	pessoa3.setNome("Testando");
+    	pessoa3.setDocumento("123456");
+    	pessoa3.setEstado("SP");
+    	pessoa3.setInscricaoEstadual("4567");
+    	
     	NotaFiscal nf = new NotaFiscal();
     	nf.setDataEmissao(LocalDate.now());
     	nf.setDataOperacao(LocalDate.now());
     	nf.setDestinatario(destinatario);
     	nf.setEmitente(emitente);
     	nf.setInformacoes("Teste");
+    	NotaFiscal nf2 = new NotaFiscal();
+    	nf2.setDataEmissao(LocalDate.now());
+    	nf2.setDataOperacao(LocalDate.now());
+    	nf2.setDestinatario(destinatario);
+    	nf2.setEmitente(emitente);
+    	nf2.setInformacoes("Teste");
+    	NotaFiscal nf3 = new NotaFiscal();
+    	nf3.setDataEmissao(LocalDate.now());
+    	nf3.setDataOperacao(LocalDate.now());
+    	nf3.setDestinatario(destinatario);
+    	nf3.setEmitente(emitente);
+    	nf3.setInformacoes("Teste");
     	
     	Item item = new Item();
     	item.setDescricao("Teste");
@@ -47,13 +66,12 @@ public class App
     	
     	nf.addItem(item);
     	nf.addItem(item2);
-    	
     	nfc.create(nf);
-    	System.out.println(nfc.findAll());
-    	nf.removeItem(item);
-    	nfc.update(nf);
-    	System.out.println(nfc.findAll());
-    	nfc.delete(nf);
-    	System.out.println(nfc.findAll());
+    	nf2.addItem(item);
+    	nf2.addItem(item2);
+    	nfc.create(nf2);
+    	nf3.addItem(item);
+    	nf3.addItem(item2);
+    	nfc.create(nf3);
     }
 }

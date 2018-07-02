@@ -3,6 +3,7 @@ package br.edu.granbery.trabalhomodular.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +29,7 @@ public class Item {
 	@Column(name = "QTD")
 	private Integer qtd;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY, cascade= {CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name = "FK_ITEM_NOTAFISCAL", referencedColumnName = "NUM_NOTA")
 	private NotaFiscal notaFiscal;
 
@@ -88,4 +89,11 @@ public class Item {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", descricao=" + descricao + ", preco=" + preco + ", qtd=" + qtd + "]";
+	}
+	
+	
 }

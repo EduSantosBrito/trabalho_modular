@@ -32,10 +32,10 @@ public class Pessoa {
 	@Column(name = "ESTADO", length = 2, nullable = false)
 	private String estado;
 
-	@OneToMany(mappedBy = "emitente", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "emitente")
 	private List<NotaFiscal> notasEmitidas;
 	
-	@OneToMany(mappedBy = "destinatario", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "destinatario")
 	private List<NotaFiscal> notasRecebidas;
 	
 
@@ -107,5 +107,12 @@ public class Pessoa {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Pessoa [id=" + id + ", documento=" + documento + ", nome=" + nome + ", inscricaoEstadual="
+				+ inscricaoEstadual + ", estado=" + estado + "]";
+	}
+	
 	
 }
