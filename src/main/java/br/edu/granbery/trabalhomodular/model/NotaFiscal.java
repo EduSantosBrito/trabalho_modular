@@ -39,7 +39,7 @@ public class NotaFiscal {
 	@Column(name = "INFORMACOES", length = 2048)
 	private String informacoes;
 
-	@OneToMany(mappedBy = "notaFiscal", cascade=CascadeType.PERSIST, orphanRemoval=true)
+	@OneToMany(mappedBy = "notaFiscal", cascade=CascadeType.ALL)
 	private List<Item> itens;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -151,6 +151,7 @@ public class NotaFiscal {
 	public void removeItem(Item item) {
 		for(Item i : itens) {
 			if(item.equals(i)) {
+				i.setNotaFiscal(null);
 				itens.remove(i);
 			}
 		}

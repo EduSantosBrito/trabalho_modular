@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import br.edu.granbery.trabalhomodular.dto.PessoaDTO;
 import br.edu.granbery.trabalhomodular.model.NotaFiscal;
+import br.edu.granbery.trabalhomodular.model.Pessoa;
 import br.edu.granbery.trabalhomodular.util.CrudFactory;
 import br.edu.granbery.trabalhomodular.util.GenericCrud;
 import br.edu.granbery.trabalhomodular.util.JPAUtil;
@@ -13,6 +15,10 @@ public class NotaFiscalController {
 	
 	private GenericCrud<NotaFiscal, Integer> gci = CrudFactory.buildCrudFor(NotaFiscal.class);
 	private static final String SELECT_COUNT_QUERY = "SELECT COUNT(c.id) FROM %s as c";
+	private static final String SELECT_MAX_ESTADO_EMITENTE_QUERY = "SELECT MAX(p.estado) FROM %s as c INNER JOIN %s as p ON p.id = c.emitente";
+	private static final String SELECT_MAX_ESTADO_DESTINATARIO_QUERY = "SELECT MAX(p.estado) FROM %s as c INNER JOIN %s as p ON p.id = c.destinatario";
+	private static final String SELECT_MAX_DOCUMENTO_EMITENTE_QUERY = "SELECT new br.edu.granbery.trabalhomodular.dto.PessoaDTO(p.nome, MAX(p.documento)) FROM %s as c INNER JOIN %s as p ON p.id = c.emitente";
+	private static final String SELECT_MAX_DOCUMENTO_DESTINATARIO_QUERY = "SELECT new br.edu.granbery.trabalhomodular.dto.PessoaDTO(p.nome, MAX(p.documento)) FROM %s as c INNER JOIN %s as p ON p.id = c.destinatario";
 	private EntityManager entityManager = JPAUtil.getEntityManager();
 	
 	public NotaFiscal create(NotaFiscal notaFiscal) {
@@ -32,12 +38,13 @@ public class NotaFiscalController {
 	}
 	
 	public void delete(NotaFiscal notafiscal) {
-		gci.delete(notafiscal.getId());
+		gci.delete(notafiscal);
 	}
 	
 	public Object countAll() {
 		entityManager.getTransaction().begin();
-		Object count = entityManager.createQuery(String.format(SELECT_COUNT_QUERY, NotaFiscal.class.getSimpleName())).getSingleResult();
+		Object count = entityManager.createQuery(String.format(SELECT_COUNT_QUERY, NotaFiscal.class.getSimpleName()))
+									.getSingleResult();
 		entityManager.getTransaction().commit();
 		return count;
 	}
@@ -76,7 +83,7 @@ public class NotaFiscalController {
 	}
 	
 	public Integer getValueBiggerThanTenThousand() {
-		return countValueBiggerThan(10_000d);
+		return countValueBiggerThan(10000d);
 	}
 	
 	private Integer countValueBiggerThan(Double value) {
@@ -103,6 +110,34 @@ public class NotaFiscalController {
 			}
 		}
 		return count;
+	}
+	
+	public Object getMaxEstadoEmitente() {
+		entityManager.getTransaction().begin();
+		Object estado = entityManager.createQuery(String.format(SELECT_MAX_ESTADO_EMITENTE_QUERY, NotaFiscal.class.getSimpleName(), Pessoa.class.getSimpleName()))
+					 .getSingleResult();
+		entityManager.getTransaction().commit();
+		return estado;
+	}
+	public Object getMaxEstadoDestinatario() {
+		entityManager.getTransaction().begin();
+		Object estado = entityManager.createQuery(String.format(SELECT_MAX_ESTADO_DESTINATARIO_QUERY, NotaFiscal.class.getSimpleName(), Pessoa.class.getSimpleName()))
+					 .getSingleResult();
+		entityManager.getTransaction().commit();
+		return estado;		
+	}
+	public PessoaDTO getMaxDocumentoEmitente() {
+		entityManager.getTransaction().begin();
+		PessoaDTO pessoaDTO = (PessoaDTO) entityManager.createQuery(String.format(SELECT_MAX_DOCUMENTO_EMITENTE_QUERY, NotaFiscal.class.getSimpleName(), Pessoa.class.getSimpleName())).getSingleResult();
+		entityManager.getTransaction().commit();
+		return pessoaDTO;
+	}
+	
+	public PessoaDTO getMaxDocumentoDestinatario() {
+		entityManager.getTransaction().begin();
+		PessoaDTO pessoaDTO = (PessoaDTO) entityManager.createQuery(String.format(SELECT_MAX_DOCUMENTO_DESTINATARIO_QUERY, NotaFiscal.class.getSimpleName(), Pessoa.class.getSimpleName())).getSingleResult();
+		entityManager.getTransaction().commit();
+		return pessoaDTO;
 	}
 	
 }

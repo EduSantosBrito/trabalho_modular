@@ -7,6 +7,6 @@ public interface GenericCrud<T, PK extends Serializable> {
 	T create(T t);
 	T find(PK id);
 	T update(T t);
-	void delete(PK id);
+	void delete(T t);
 	List<T> findAll();
 }

@@ -27,6 +27,6 @@ public class PessoaController {
 	}
 	
 	public void delete(Pessoa pessoa) {
-		gci.delete(pessoa.getId());
+		gci.delete(pessoa);
 	}
 }

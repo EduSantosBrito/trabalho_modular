@@ -27,6 +27,6 @@ public class ItemController {
 	}
 	
 	public void delete(Item item) {
-		gci.delete(item.getId());
+		gci.delete(item);
 	}
 }
