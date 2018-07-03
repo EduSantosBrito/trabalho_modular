@@ -41,7 +41,6 @@ public class GenericCrudImpl<T, PK extends Serializable> implements GenericCrud<
 
 	public void delete(T t) {
 		entityManager.getTransaction().begin();
-		//entityManager.createQuery(String.format(DELETE_FROM_QUERY, entityClass.getSimpleName(), "id")).setParameter("id", id).executeUpdate();
 		entityManager.remove(t);
 		entityManager.getTransaction().commit();
 	}
