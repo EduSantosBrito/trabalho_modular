@@ -22,16 +22,17 @@ public class Menubar {
 		JMenu newMenu = buildNewMenu(addNotaFiscalItem);
 		JMenu aboutMenu = buildAboutMenu(aboutItem);
 		
-		addActionListener(menuAction, homepageItem, addNotaFiscalItem, aboutItem);
+		addActionListener(menuAction, homepageItem, addNotaFiscalItem, aboutItem,  indicatorsItem);
 		
 		return buildMenubar(fileMenu, newMenu, aboutMenu);
 	}
 
 	private void addActionListener(MenuAction menuAction, JMenuItem homepageItem, JMenuItem addNotaFiscalItem,
-			JMenuItem aboutItem) {
+			JMenuItem aboutItem, JMenuItem indicatorsItem) {
 		addNotaFiscalItem.addActionListener(menuAction.addNotaFiscal());
 		homepageItem.addActionListener(menuAction.toHomepage());
 		aboutItem.addActionListener(menuAction.toAboutPage());
+		indicatorsItem.addActionListener(menuAction.toIndicators());
 	}
 
 	private JMenuBar buildMenubar(JMenu fileMenu, JMenu newMenu, JMenu aboutMenu) {

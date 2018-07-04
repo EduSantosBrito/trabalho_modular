@@ -43,12 +43,10 @@ public class NotaFiscal {
 	@OneToMany(mappedBy = "notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Item> itens;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "FK_NOTAFISCAL_EMITENTE", referencedColumnName = "ID")
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa emitente;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "FK_NOTAFISCAL_DESTINATARIO", referencedColumnName = "ID")
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa destinatario;
 
 	public NotaFiscal() {

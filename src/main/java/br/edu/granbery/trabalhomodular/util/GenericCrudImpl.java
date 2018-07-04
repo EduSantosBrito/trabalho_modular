@@ -20,7 +20,7 @@ public class GenericCrudImpl<T, PK extends Serializable> implements GenericCrud<
 
 	public T create(T t) {
 		entityManager.getTransaction().begin();
-		entityManager.persist(t);
+		entityManager.merge(t);
 		entityManager.getTransaction().commit();
 		return t;
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.edu.granbery.trabalhomodular.dto.PessoaDTO;
+import br.edu.granbery.trabalhomodular.model.Item;
 import br.edu.granbery.trabalhomodular.model.NotaFiscal;
 import br.edu.granbery.trabalhomodular.model.Pessoa;
 import br.edu.granbery.trabalhomodular.util.CrudFactory;
@@ -13,6 +14,7 @@ import br.edu.granbery.trabalhomodular.util.JPAUtil;
 
 public class NotaFiscalController {
 	
+	private ItemController ic = new ItemController();
 	private GenericCrud<NotaFiscal, Integer> gci = CrudFactory.buildCrudFor(NotaFiscal.class);
 	private static final String SELECT_COUNT_QUERY = "SELECT COUNT(c.id) FROM %s as c";
 	private static final String SELECT_MAX_ESTADO_EMITENTE_QUERY = "SELECT MAX(p.estado) FROM %s as c INNER JOIN %s as p ON p.id = c.emitente";
@@ -63,10 +65,13 @@ public class NotaFiscalController {
 		return total;
 	}
 	
-	public Double getAverageNota(Integer id) {
-		NotaFiscal nf = find(id);
-		Integer count = nf.getQtdItens();
-		Double total = nf.getValor();
+	public Double getAverageItem() {
+		List<Item> itens = ic.findAll();
+		Integer count = itens.size();
+		Double total = 0d;
+		for(Item item:itens) {
+			total+=item.getPreco();
+		}
 		return total/count;
 	}
 	

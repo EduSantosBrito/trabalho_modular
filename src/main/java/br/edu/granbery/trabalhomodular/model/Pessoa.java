@@ -3,6 +3,7 @@ package br.edu.granbery.trabalhomodular.model;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,10 +33,10 @@ public class Pessoa {
 	@Column(name = "ESTADO", length = 2, nullable = false)
 	private String estado;
 
-	@OneToMany(mappedBy = "emitente")
+	@OneToMany(mappedBy = "emitente", cascade=CascadeType.ALL)
 	private List<NotaFiscal> notasEmitidas = new LinkedList<NotaFiscal>();
 	
-	@OneToMany(mappedBy = "destinatario")
+	@OneToMany(mappedBy = "destinatario", cascade=CascadeType.ALL)
 	private List<NotaFiscal> notasRecebidas = new LinkedList<NotaFiscal>();;
 	
 
@@ -87,8 +88,8 @@ public class Pessoa {
 		return notasRecebidas;
 	}
 
-	public void setNotasRecebidas(List<NotaFiscal> notasRecebidas) {
-		this.notasRecebidas = notasRecebidas;
+	public void addNotaRecebida(NotaFiscal notaFiscal) {
+		this.notasRecebidas.add(notaFiscal);
 	}
 	
 	@Override

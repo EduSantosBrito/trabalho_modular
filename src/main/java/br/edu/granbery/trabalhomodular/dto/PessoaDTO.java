@@ -25,6 +25,11 @@ public class PessoaDTO {
 	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
+	@Override
+	public String toString() {
+		return documento + " - " + nome;
+	}
 	
 
+	
 }
