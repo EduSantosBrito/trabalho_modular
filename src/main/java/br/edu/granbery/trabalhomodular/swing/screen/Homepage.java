@@ -40,6 +40,7 @@ public class Homepage {
 		Toolbar toolbar = new Toolbar();
 		toolbar.setRemoveAction(toolbarAction.deleteRow(table));
 		toolbar.setEditAction(toolbarAction.editRow(table));
+		toolbar.setNewAction(toolbarAction.addRow(table));
 		return toolbar;
 	}
 
@@ -61,7 +62,17 @@ public class Homepage {
 
 
 	private JTable createTable(DefaultTableModel model) {
-		JTable table = new JTable();
+		JTable table = new JTable() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+		    public boolean isCellEditable(int row, int column) {                
+		        return false;               
+		    };
+		};
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setModel(model);
 		return table;

@@ -41,6 +41,7 @@ public class GenericCrudImpl<T, PK extends Serializable> implements GenericCrud<
 
 	public void delete(T t) {
 		entityManager.getTransaction().begin();
+		entityManager.merge(t);
 		entityManager.remove(t);
 		entityManager.getTransaction().commit();
 	}

@@ -1,5 +1,6 @@
 package br.edu.granbery.trabalhomodular.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -32,10 +33,10 @@ public class Pessoa {
 	private String estado;
 
 	@OneToMany(mappedBy = "emitente")
-	private List<NotaFiscal> notasEmitidas;
+	private List<NotaFiscal> notasEmitidas = new LinkedList<NotaFiscal>();
 	
 	@OneToMany(mappedBy = "destinatario")
-	private List<NotaFiscal> notasRecebidas;
+	private List<NotaFiscal> notasRecebidas = new LinkedList<NotaFiscal>();;
 	
 
 	public Integer getId() {
@@ -78,8 +79,8 @@ public class Pessoa {
 		return notasEmitidas;
 	}
 
-	public void setNotasEmitidas(List<NotaFiscal> notasEmitidas) {
-		this.notasEmitidas = notasEmitidas;
+	public void addNotaEmitida(NotaFiscal notaFiscal) {
+		this.notasEmitidas.add(notaFiscal);
 	}
 
 	public List<NotaFiscal> getNotasRecebidas() {

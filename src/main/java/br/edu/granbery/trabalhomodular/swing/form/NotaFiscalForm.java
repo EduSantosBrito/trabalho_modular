@@ -1,6 +1,8 @@
 package br.edu.granbery.trabalhomodular.swing.form;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -72,6 +74,7 @@ public class NotaFiscalForm {
 		fields.setLayout(new BoxLayout(fields, BoxLayout.Y_AXIS));
 		fields.add(new JLabel("N Nota"));
 		fields.add(id);
+		id.setEditable(false);
 		fields.add(new JLabel("Modelo"));
 		modelo.setText("Modelo 1-A");
 		modelo.setEditable(false);
@@ -84,6 +87,7 @@ public class NotaFiscalForm {
 		fields.add(dataOperacao);
 		fields.add(new JLabel("Data da Emissão"));
 		fields.add(dataEmissao);
+		dataEmissao.setEditable(false);
 		fields.add(new JLabel("Informações Complementares"));
 		fields.add(informacoes);
 		
@@ -92,10 +96,12 @@ public class NotaFiscalForm {
 	
 	public NotaFiscal toNotaFiscal() {
 		NotaFiscal nf = new NotaFiscal();
-		nf.setId(Integer.parseInt(getId().getText()));
+		nf.setId(getId().getText().isEmpty() ? null : Integer.parseInt(getId().getText()));
 		nf.setNatureza("Venda");
 		nf.setModelo("Modelo 1-A");
-		nf.setDataOperacao(LocalDate.now());
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		dtf.withLocale(new Locale("pt", "BR"));
+		nf.setDataOperacao(LocalDate.parse(getDataOperacao().getText(), dtf));
 		nf.setDataEmissao(LocalDate.now());
 		nf.setInformacoes(getInformacoes().getText());
 		return nf;

@@ -33,8 +33,6 @@ public class Toolbar {
 		btnEdit.setIcon(new ImageIcon(btnEdit.getClass().getResource("/images/editar.png")));
 		JButton btnDelete = new JButton();
 		btnDelete.setIcon(new ImageIcon(btnDelete.getClass().getResource("/images/excluir.png")));
-		JButton btnDetail = new JButton();
-		btnDetail.setIcon(new ImageIcon(btnDetail.getClass().getResource("/images/detalhes.png")));
 		
 		if (removeAction != null){
 			btnDelete.addActionListener(removeAction);
@@ -52,7 +50,6 @@ public class Toolbar {
 		toolbar.add(btnNew);
 		toolbar.add(btnEdit);
 		toolbar.add(btnDelete);
-		toolbar.add(btnDetail);
 		
 		return toolbar;
 		

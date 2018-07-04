@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class NotaFiscal {
 	@Column(name = "INFORMACOES", length = 2048)
 	private String informacoes;
 
-	@OneToMany(mappedBy = "notaFiscal", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Item> itens;
 
 	@ManyToOne(cascade = CascadeType.ALL)
